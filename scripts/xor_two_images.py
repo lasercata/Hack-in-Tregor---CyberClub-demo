@@ -22,13 +22,22 @@ def xor(msg: list[int], key: str) -> list[int]:
     return ret
 
 def xor_image(fn_in_1: str, fn_in_2: str, fn_out: str, transparency=False) -> None:
-    '''TODO'''
+    '''
+    Xor two images and saves the result in a new image.
+    Can deal with transparency.
 
+    - fn_in_1 : the first image to xor ;
+    - fn_in_2 : the second image to xor ;
+    - fn_out  : where to write the result.
+    '''
+
+    #---Opening images
     im_1 = Image.open(fn_in_1)
     im_2 = Image.open(fn_in_2)
     pix_1 = im_1.load()
     pix_2 = im_2.load()
 
+    #---Getting min size and creating image to save result
     enc_size = (min(im_1.size[0], im_2.size[0]), min(im_1.size[1], im_2.size[1]))
     if transparency:
         enc_img = Image.new('RGBA', enc_size)
@@ -37,6 +46,7 @@ def xor_image(fn_in_1: str, fn_in_2: str, fn_out: str, transparency=False) -> No
 
     enc_pix = enc_img.load()
 
+    #---Xoring each pixel
     for i in range(enc_size[0]):
         for j in range(enc_size[1]):
             try:
@@ -55,7 +65,40 @@ def xor_image(fn_in_1: str, fn_in_2: str, fn_out: str, transparency=False) -> No
             else:
                 enc_pix[i, j] = (r1 ^ r2, g1 ^ g2, b1 ^ b2)
 
+    #---Writing result
     # enc_img.show()
+    enc_img.save(fn_out)
+
+def xor_image_simple(fn_in_1: str, fn_in_2: str, fn_out: str) -> None:
+    '''
+    Xor two images and saves the result in a new image.
+
+    - fn_in_1 : the first image to xor ;
+    - fn_in_2 : the second image to xor ;
+    - fn_out  : where to write the result.
+    '''
+
+    #---Opening images
+    im_1 = Image.open(fn_in_1)
+    im_2 = Image.open(fn_in_2)
+    pix_1 = im_1.load()
+    pix_2 = im_2.load()
+
+    #---Getting min size and creating image to save result
+    enc_size = (min(im_1.size[0], im_2.size[0]), min(im_1.size[1], im_2.size[1]))
+    enc_img = Image.new('RGB', enc_size)
+
+    enc_pix = enc_img.load()
+
+    #---Xoring each pixel
+    for i in range(enc_size[0]):
+        for j in range(enc_size[1]):
+            r1, g1, b1 = pix_1[i, j]
+            r2, g2, b2 = pix_2[i, j]
+
+            enc_pix[i, j] = (r1 ^ r2, g1 ^ g2, b1 ^ b2)
+
+    #---Writing result
     enc_img.save(fn_out)
 
 ##-Run

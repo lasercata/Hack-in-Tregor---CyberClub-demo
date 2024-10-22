@@ -64,7 +64,7 @@ def read_message(fn_in: str, base: int = 2) -> str:
         else:
             j += 1
 
-    # print(enc_msg)
+    print(enc_msg)
     return convert_msg_back(enc_msg, base)
 
 ##-Run
