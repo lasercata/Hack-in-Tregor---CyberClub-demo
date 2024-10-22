@@ -1,0 +1,179 @@
+\documentclass{beamer}
+
+
+%------------------------------------------------------------------------
+%
+% Author                :   Lasercata
+% Last modification     :   2024.10.21
+%
+%------------------------------------------------------------------------
+
+%See https://github.com/lasercata/LaTeX_Templates for the file beamer_base.sty
+\input{beamer_base_.sty}
+
+% \usetheme{Antibes}
+\usetheme{Madrid}
+
+\title{Hack'in Trégor -- Cryptographie et stéganographie sur images}
+\author{Louis} %TODO: which last name ?
+\date{\today}
+
+
+%---------------------------------Begin Document
+\begin{document}
+    \frame{\titlepage}
+
+    \begin{frame}{Table of contents}
+        \tableofcontents
+    \end{frame}
+
+    \section{Image}
+
+    \begin{frame}{Comment voir une image ?}% {{{1
+        TODO: matrice de pixels.
+    \end{frame}% }}}1
+    
+    \section{Xor}
+
+    \begin{frame}{Principe du \texttt{xor}}% {{{1
+        \begin{block}{Table de vérité du \texttt{xor}}% {{{2
+            \begin{center}
+                \begin{tabular}{|c|c||c|}
+                    \hline
+                    $A$ & $B$ & $A \oplus B$
+                    \\
+                    \hline
+                    \hline
+                    $0$ & $0$ & $0$
+                    \\
+                    \hline
+                    $0$ & $1$ & $1$
+                    \\
+                    \hline
+                    $1$ & $0$ & $1$
+                    \\
+                    \hline
+                    $1$ & $1$ & $0$
+                    \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{block}% }}}2
+
+        C'est le \emph{ou exclusif} : un dessert \emph{ou} l'autre, mais pas les deux !
+    \end{frame}% }}}1
+
+    \begin{frame}{Propriétés du xor}% {{{1
+        \begin{block}{Table de vérité du \texttt{xor}}% {{{2
+            Si
+            \[
+                c = m \oplus k
+            \]
+            alors on peut retrouver $m$ à partir de $k$ et $c$ :
+            \[
+                m = c \oplus k
+            \]
+        \end{block}% }}}2
+
+        \vspace{12pt}
+        
+        Explication :
+
+        Dans la table de vérité du \texttt{xor}, on remarque que, pour $a \in \set{0, 1}$, $\boxed{a \oplus a = 0}$ et $\boxed{0 \oplus a = a}$, d'où :
+        \[
+            \begin{array}{rcl}
+                c \oplus k
+                &=&
+                (m \oplus k) \oplus k
+                \\
+                &=&
+                m \oplus (k \oplus k)
+                \\
+                &=&
+                m \oplus 0
+                \\
+                &=& m
+            \end{array}
+        \]
+    \end{frame}% }}}1
+
+    \begin{frame}{Xor entre entiers}% {{{1
+        \begin{block}{Xor entre entiers}% {{{2
+            Exemple :
+            $10 \oplus 44$
+
+            On convertit en binaire :
+            \[
+                \begin{array}{rcl}
+                    10 &=& 1010_2
+                    \\
+                    44 &=& 101100_2
+                \end{array}
+            \]
+
+            Puis on effectue le \texttt{xor} bit à bit :
+            \[
+                \begin{array}{ccccccc}
+                    & 0 & 0 & 1 & 0 & 1 & 0
+                    \\
+                    \oplus
+                    & 1 & 0 & 1 & 1 & 0 & 0
+                    \\
+                    \hline
+                    =
+                    & 1 & 0 & 0 & 1 & 1 & 0
+                \end{array}
+            \]
+
+            On obtient $100110_2 = 38_{10}$.
+        \end{block}% }}}2
+    \end{frame}% }}}1
+
+    \begin{frame}{Xor entre images}% {{{1
+        \begin{block}{Principe}% {{{2
+            On \texttt{xor} les pixels entre eux :
+            \[
+                \underbrace{(r_1, g_1, b_1)}_{\text{pixel image 1}}
+                \oplus
+                \underbrace{(r_2, g_2, b_2)}_{\text{pixel image 2}}
+                =
+                \underbrace{(r_1 \oplus r_2,\ g_1 \oplus g_2,\ b_1 \oplus b_2)}_{\text{pixel résultat}}
+            \]
+        \end{block}% }}}2
+
+        \begin{block}{Exemple :}% {{{2
+            \begin{center}
+                \begin{tikzpicture}
+                    % \node (1) at (0, 0) [rectangle, fill, ff4500] {\textcolor{black}{(255, 69, 0)}};
+                    \node (1) at (0, 0) [rectangle, fill, ff4500] {\textcolor{black}{(255, 70, 0)}};
+                    \node (xor) at (1.5, 0) {$\oplus$};
+                    \node (2) at (3, 0) [rectangle, fill, 0ff] {\textcolor{black}{(0, 255, 255)}};
+                    \node (eq) at (4.5, 0) {$=$};
+                    \node (2) at (6.3, 0) [rectangle, fill, xor_color] {\textcolor{black}{(255, 185, 255)}};
+                \end{tikzpicture}
+            \end{center}
+        \end{block}% }}}2
+
+        On applique ensuite ceci pour chaque pixel.
+    \end{frame}% }}}1
+
+    \section{Stéganographie}
+
+    \begin{frame}{Modification de pixel}% {{{1
+        TODO: une petite modification du LSB des couleurs d'un pixel n'est pas visible à l'\oe il.
+    \end{frame}% }}}1
+
+    \begin{frame}{Cacher du texte dans un pixel}
+        TODO
+    \end{frame}
+
+    \begin{frame}% {{{1
+        \begin{center}
+            \large{\bf Merci pour votre attention}
+        \end{center}
+    \end{frame}% }}}1
+    
+\end{document}
+%--------------------------------------------End
+
+% vim:foldmethod=marker:foldlevel=0
