@@ -11,7 +11,7 @@ xored_img_fn="xor_not_2b.png"
 msg="This is the flag !"
 
 ##-make challenge
-mkdir chall
+mkdir chall tmp
 
 echo "Generating the key image ..."
 ./scripts/generate_random_image.py chall/$key_img_fn $x $y || exit
@@ -22,4 +22,5 @@ echo "Hiding the flag in a temp image ..."
 echo "Xoring ..."
 ./scripts/xor_two_images.py chall/$key_img_fn tmp/text_hidden.png chall/$xored_img_fn || exit
 
+echo "Zipping ..."
 zip -rv chall.zip chall/
