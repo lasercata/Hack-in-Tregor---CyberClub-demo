@@ -15,7 +15,7 @@
 \usetheme{Madrid}
 
 \title{Hack'in Trégor -- Cryptographie et stéganographie sur images}
-\author{Louis} %TODO: which last name ?
+\author{Club Cyber ENSSAT}
 \date{\today}
 
 
@@ -30,7 +30,20 @@
     \section{Image}
 
     \begin{frame}{Comment voir une image ?}% {{{1
-        TODO: matrice de pixels.
+        C'est une matrice de pixels.
+
+        \begin{center}
+            \begin{tabular}{cp{200pt}}
+                \includegraphics[scale=.17]{pics/pixels.png}
+                &
+                \vspace{-150pt}
+                (Rouge, Vert, Bleu)
+
+                \vspace{12pt}
+                
+                \includegraphics[scale=.17]{pics/pixels_zoom.png}
+            \end{tabular}
+        \end{center}
     \end{frame}% }}}1
     
     \section{Xor}
@@ -160,12 +173,64 @@
     \section{Stéganographie}
 
     \begin{frame}{Modification de pixel}% {{{1
-        TODO: une petite modification du LSB des couleurs d'un pixel n'est pas visible à l'\oe il.
+        % TODO: une petite modification du LSB des couleurs d'un pixel n'est pas visible à l'\oe il.
+
+        \begin{block}{Légère modification de la couleur d'un pixel}
+            Si l'on modifie les derniers chiffres d'un pixel :
+            \begin{center}% {{{3
+                \begin{tikzpicture}
+                    \node (1) at (0, 0) [rectangle, fill, color1] {\textcolor{black}{(60, 100, 220)}};
+                    \node (2) at (3, 0) [rectangle, fill, color2] {\textcolor{black}{(6\textcolor{accent_color}{8}, 10\textcolor{accent_color}8, 22\textcolor{accent_color}8)}};
+                \end{tikzpicture}
+            \end{center}% }}}3
+
+            Cela ne va pas être visible sur une image à l'\oe il nu.
+        \end{block}
     \end{frame}% }}}1
 
-    \begin{frame}{Cacher du texte dans un pixel}
-        TODO
-    \end{frame}
+    \begin{frame}{Cacher du texte dans un pixel}% {{{1
+        \begin{block}{Comment cacher du texte dans un pixel ?}
+            \begin{itemize}
+                \item Message : \texttt{Lorem ipsum}
+                \item Conversion en ASCII :
+                \begin{center}
+                    \texttt{[76, 111, 114, 101, 109, 32, 105, 112, 115, 117, 109]}
+                \end{center}
+
+                \item Modification du dernier chiffre des pixels :
+                \begin{center}% {{{3
+                    \begin{tikzpicture}
+                        \node (1) at (0, 0) [rectangle, fill, color3] {\textcolor{black}{(6\textcolor{accent_color}{7}, 10\textcolor{accent_color}{6}, 22\textcolor{accent_color}{1})}};
+                        \node (2) at (2.54, 0) [rectangle, fill, color4] {\textcolor{black}{(6\textcolor{accent_color}{1}, 10\textcolor{accent_color}{1}, 22\textcolor{accent_color}{1})}};
+                    \end{tikzpicture}
+                \end{center}% }}}3
+            \end{itemize}
+        \end{block}
+    \end{frame}% }}}1
+
+    \begin{frame}{Exemple}% {{{1
+        \textbf{Message} : Lorem ipsum dolot sit amet \ldots
+
+        \begin{center}
+            \begin{tabular}{p{53pt}cccc}
+                \includegraphics[scale=4.5]{pics/mario_0.png}
+                &
+                \includegraphics[scale=4.5]{pics/mario_lorem_2.png}
+                &
+                \includegraphics[scale=4.5]{pics/mario_lorem_10.png}
+                &
+                \includegraphics[scale=4.5]{pics/mario_lorem_25.png}
+                &
+                \includegraphics[scale=4.5]{pics/mario_lorem_100.png}
+                \\
+                Image non modifiée
+                & base 2
+                & base 10
+                & base 25
+                & base 100
+            \end{tabular}
+        \end{center}
+    \end{frame}% }}}1
 
     \begin{frame}% {{{1
         \begin{center}
