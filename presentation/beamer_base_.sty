@@ -357,6 +357,7 @@
 
 %---------Beamer init
 % \usetheme{Antibes}
+\usetheme{Madrid}
 
 \usecolortheme[named=accent_color]{structure}
 % \usecolortheme{beaver}
@@ -367,13 +368,16 @@
 {
     \leavevmode%
     \hbox{%
-        \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+        \begin{beamercolorbox}[wd=.55\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
             \usebeamerfont{title in head/foot}\inserttitle
         \end{beamercolorbox}%
-        \begin{beamercolorbox}[wd=.5\paperwidth, ht=2.25ex, dp=1ex, right]{date in head/foot}%
+        \begin{beamercolorbox}[wd=.25\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.20\paperwidth, ht=2.25ex, dp=1ex, right]{date in head/foot}%
             \usebeamerfont{date in head/foot}
-            \insertframenumber{}\hspace*{2ex} 
-            % \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+            % \insertframenumber{}\hspace*{2ex} 
+            \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
     \end{beamercolorbox}}%
     \vskip0pt%
 }
