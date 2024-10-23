@@ -17,7 +17,7 @@ echo "Generating the key image ..."
 ./scripts/generate_random_image.py chall/$key_img_fn $x $y || exit
 
 echo "Hiding the flag in a temp image ..."
-./scripts/hide_text.py "$img" "$msg" tmp/text_hidden.png || exit
+./scripts/hide_text.py "$img" "$msg" tmp/text_hidden.png 10 || exit
 
 echo "Xoring ..."
 ./scripts/xor_two_images.py chall/$key_img_fn tmp/text_hidden.png chall/$xored_img_fn || exit

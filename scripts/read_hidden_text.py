@@ -8,6 +8,16 @@ from sys import exit as sysexit
 from PIL import Image
 
 ##-Main
+def convert_from_base(n: list[int], base: int) -> int:
+    '''
+    Convert `n` from base `base` to base 10.
+
+    - n    : the number, e.g [4, 12] for 7c in base 16 (little endian) ;
+    - base : the base in which the number is written.
+    '''
+
+    return sum(x * base**k for k, x in enumerate(reversed(n)))
+
 def get_digit_from_col(col: int, base: int = 2) -> int:
     '''Returns the hidden digit from `col`.'''
 
@@ -30,9 +40,15 @@ def convert_msg_back(msg_enc: list[int], base: int = 2) -> str:
     while msg_enc[-1] == base: #Removing the trailing [base, base, base, base].
         msg_enc = msg_enc[:-1]
 
-    char_lst = ''.join([str(k) for k in msg_enc]).split(str(base))
+    msg_sep = [[]] # [[1, 1, 0, 0, 0, 0, 1], [1, 1, 0, 0, 0, 1, 0]] useful when base > 10
+    for k in msg_enc:
+        if k == base:
+            msg_sep.append([])
+        else:
+            msg_sep[-1].append(k)
 
-    ret = ''.join([chr(int(k, base)) for k in char_lst])
+    int_lst = [convert_from_base(n, base) for n in msg_sep]
+    ret = ''.join(chr(k) for k in int_lst)
 
     return ret
 

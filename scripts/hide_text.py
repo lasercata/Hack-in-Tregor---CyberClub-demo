@@ -37,7 +37,12 @@ def hide_in_color(x: int, col: int, base: int = 2) -> int:
 
     b = base + 1 # To write the delimiters (`base`)
 
-    return b * (col // b) + x
+    ret = b * (col // b) + x
+
+    if ret > 255:
+        ret = b * ((col - b) // b) + x
+
+    return ret
 
 def convert_msg(msg: str, base: int = 2) -> list[int]:
     '''
